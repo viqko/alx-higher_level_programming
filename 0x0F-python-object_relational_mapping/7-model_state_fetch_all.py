@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This script changes the name of a State object
+This script lists all State objects
 from the database `hbtn_0e_6_usa`.
 """
 
@@ -11,7 +11,8 @@ from sqlalchemy.orm import sessionmaker
 
 if __name__ == "__main__":
     """
-    Updates a State object on the database.
+    Access to the database and get the states
+    from the database.
     """
 
     db_uri = 'mysql+mysqldb://{}:{}@localhost:3306/{}'.format(
@@ -21,7 +22,5 @@ if __name__ == "__main__":
 
     session = Session()
 
-    ari_state = session.query(State).filter(State.id == '2').first()
-    ari_state.name = 'New Mexico'
-    session.commit()
-    session.close()
+    for instance in session.query(State).order_by(State.id):
+        print('{0}: {1}'.format(instance.id, instance.name))
